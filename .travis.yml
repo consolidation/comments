@@ -1,0 +1,40 @@
+dist: trusty
+language: php
+
+# Only test the master branch and SemVer tags.
+branches:
+  only:
+    - master
+    - '/^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+.*$/'
+
+matrix:
+  include:
+    -
+      php: 7.1
+      env: dependencies=highest
+    -
+      php: 7.0.11
+    -
+      php: 5.6
+      env: dependencies=lowest
+
+# Builds are faster if we do not need to sudo
+sudo: false
+
+# Store the composer cache for faster builds
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+# Do highest/lowest testing by installing dependencies per the 'dependencies' setting
+before_script:
+  - 'if [ -z "$dependencies" ]; then composer install --prefer-dist; fi;'
+  - 'if [ "$dependencies" = "lowest" ]; then composer update --prefer-dist --prefer-lowest -n; fi;'
+  - 'if [ "$dependencies" = "highest" ]; then composer update --prefer-dist -n; fi;'
+
+script:
+  - 'composer -n test'
+
+# Process coveralls
+after_success:
+  - 'travis_retry php vendor/bin/coveralls -v'
