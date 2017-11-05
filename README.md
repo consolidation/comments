@@ -37,4 +37,4 @@ $ composer require consolidation/comments
 
 ## Comparison to Existing Solutions
 
-tbd
+See Klausi's [yaml_comments](https://github.com/klausi/yaml_comments).
