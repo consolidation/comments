@@ -13,7 +13,7 @@ Prototype.
 Do lightweight editing on YAML files and then rewrite the file without losing embedded comments.
 
 ## Usage
-
+```
 // First step: read the file, parse the yaml, edit and dump the results.
 
 $original_contents = file_get_contents($filepath);
@@ -26,7 +26,7 @@ $altered_contents = Yaml::dump($parsed_data, PHP_INT_MAX, 2, Yaml::DUMP_MULTI_LI
 $commentManager = new Comments();
 $commentManager->collect(explode("\n", $original_contents));
 $altered_with_contents = $commentManager->inject(explode("\n", $altered_contents));
-
+```
 ## Limitations
 
 The comment manager collects groups of comment lines and associates them with the first non-blank content line that follows the comment. If there are multiple non-blank content lines that are exactly the same, then the comment lines are re-injected in the same order they appeared in the original file.
