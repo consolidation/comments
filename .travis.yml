@@ -11,12 +11,12 @@ matrix:
   include:
     -
       php: 7.1
-      env: dependencies=highest
+      env: HIGHEST_LOWEST='update'
     -
       php: 7.0.11
     -
       php: 5.6
-      env: dependencies=lowest
+      env: HIGHEST_LOWEST='update --prefer-lowest'
 
 # Builds are faster if we do not need to sudo
 sudo: false
@@ -28,9 +28,7 @@ cache:
 
 # Do highest/lowest testing by installing dependencies per the 'dependencies' setting
 before_script:
-  - 'if [ -z "$dependencies" ]; then composer install --prefer-dist; fi;'
-  - 'if [ "$dependencies" = "lowest" ]; then composer update --prefer-dist --prefer-lowest -n; fi;'
-  - 'if [ "$dependencies" = "highest" ]; then composer update --prefer-dist -n; fi;'
+  - 'composer -n ${HIGHEST_LOWEST-install} --prefer-dist'
 
 script:
   - 'composer -n test'
