@@ -1,0 +1,18 @@
+#
+# pantheon.yml
+#
+# Control the behavior of a site on https://pantheon.io
+#
+
+# API version for pantheon.yml schema
+api_version: 1
+
+#
+# Quicksilver Workflows allow you to specify scripts to run before or after
+# various operations on the Pantheon platform.
+#
+workflows:
+  clear_cache: { }
+  deploy: { }
+
+# Last comment

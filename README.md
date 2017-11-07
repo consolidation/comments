@@ -25,7 +25,9 @@ $altered_contents = Yaml::dump($parsed_data, PHP_INT_MAX, 2, Yaml::DUMP_MULTI_LI
 
 $commentManager = new Comments();
 $commentManager->collect(explode("\n", $original_contents));
-$altered_with_contents = $commentManager->inject(explode("\n", $altered_contents));
+$altered_with_comments = $commentManager->inject(explode("\n", $altered_contents));
+
+$result = implode("\n", $altered_with_comments);
 ```
 ## Limitations
 

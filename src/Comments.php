@@ -47,8 +47,11 @@ class Comments
      */
     public function collect(array $contentLines)
     {
+        $contentLines = $this->removeTrailingBlankLines($contentLines);
+
+        // Put look through the rest of the lines and store the comments as needed
         foreach ($contentLines as $line) {
-            if (preg_match('#^\s*$#', $line)) {
+            if ($this->isBlank($line)) {
                 $this->accumulateEmptyLine();
             } elseif ($this->isComment($line)) {
                 $this->accumulate($line);
@@ -66,6 +69,8 @@ class Comments
      */
     public function inject(array $contentLines)
     {
+        $contentLines = $this->removeTrailingBlankLines($contentLines);
+
         // If there were any comments at the beginning of the
         // file, then put them back at the beginning.
         $result = $this->headComments === false ? [] : $this->headComments;
@@ -165,5 +170,25 @@ class Comments
         // one off; if more remain, they will be attached to the next
         // line with the same value.
         return array_shift($this->stored[$line]);
+    }
+
+    /**
+     * Remove all of the blank lines from the end of an array of lines.
+     */
+    protected function removeTrailingBlankLines($lines)
+    {
+        // Remove all of the trailing blank lines.
+        while (!empty($lines) && $this->isBlank(end($lines))) {
+            array_pop($lines);
+        }
+        return $lines;
+    }
+
+    /**
+     * Return 'true' if the provided line is empty (save for whitespace)
+     */
+    protected function isBlank($line)
+    {
+        return preg_match('#^\s*$#', $line);
     }
 }
