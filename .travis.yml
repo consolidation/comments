@@ -11,12 +11,12 @@ matrix:
   include:
     -
       php: 7.1
-      env: HIGHEST_LOWEST='update'
+      env: 'HIGHEST_LOWEST="update"'
     -
       php: 7.0.11
     -
       php: 5.6
-      env: HIGHEST_LOWEST='update --prefer-lowest'
+      env: 'HIGHEST_LOWEST="update --prefer-lowest"'
 
 # Builds are faster if we do not need to sudo
 sudo: false
