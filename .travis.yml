@@ -15,7 +15,7 @@ matrix:
     -
       php: 7.0.11
     -
-      php: 5.6
+      php: 5.5
       env: 'HIGHEST_LOWEST="update --prefer-lowest"'
 
 # Builds are faster if we do not need to sudo
