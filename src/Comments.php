@@ -27,6 +27,7 @@ class Comments
     protected $hasStored;
     protected $headComments;
     protected $accumulated;
+    protected $lineIds;
     protected $stored;
     protected $endComments;
 
@@ -35,6 +36,7 @@ class Comments
         $this->hasStored = false;
         $this->headComments = false;
         $this->accumulated = [];
+        $this->lineIds = [];
         $this->stored = [];
         $this->endComments = [];
     }
@@ -137,6 +139,7 @@ class Comments
      */
     protected function storeAccumulated($line)
     {
+
         // Remember that we called storeAccumulated at least once
         $this->hasStored = true;
 
@@ -150,9 +153,38 @@ class Comments
             return;
         }
         if (!empty($this->accumulated)) {
-            // $this->stored saves a stack of accumulated results.
-            $this->stored[$line][] = $this->accumulated;
+            $lineId = $this->getLineId($line, true);
+            $this->stored[$lineId][] = $this->accumulated;
             $this->accumulated = [];
+        }
+    }
+
+    /**
+     * Generates unique line id based on the key it contains.
+     *
+     * @param string $line
+     * @param bool $isCollecting
+     */
+    protected function getLineId($line, $isCollecting = true)
+    {
+        list($id) = explode(':', $line, 2);
+
+        if ($isCollecting) {
+            if (isset($this->lineIds[$id])) {
+                $this->lineIds[$id][] = end($this->lineIds[$id]) + 1;
+            }
+            else {
+                $this->lineIds[$id] = [1];
+            }
+
+            return end($this->lineIds[$id]) . '|' . $id;
+        }
+
+        if (isset($this->lineIds[$id])) {
+            return array_shift($this->lineIds[$id]) . '|' . $id;
+        }
+        else {
+            return  '1|' . $id;
         }
     }
 
@@ -163,13 +195,14 @@ class Comments
      */
     protected function find($line)
     {
-        if (!isset($this->stored[$line]) || empty($this->stored[$line])) {
+        $lineId = $this->getLineId($line, false);
+        if (!isset($this->stored[$lineId]) || empty($this->stored[$lineId])) {
             return [];
         }
         // The stored result is a stack of accumulated comments. Pop
         // one off; if more remain, they will be attached to the next
         // line with the same value.
-        return array_shift($this->stored[$line]);
+        return array_shift($this->stored[$lineId]);
     }
 
     /**
