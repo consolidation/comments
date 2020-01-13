@@ -172,8 +172,7 @@ class Comments
         if ($isCollecting) {
             if (isset($this->lineIds[$id])) {
                 $this->lineIds[$id][] = end($this->lineIds[$id]) + 1;
-            }
-            else {
+            } else {
                 $this->lineIds[$id] = [1];
             }
 
@@ -182,8 +181,7 @@ class Comments
 
         if (isset($this->lineIds[$id])) {
             return array_shift($this->lineIds[$id]) . '|' . $id;
-        }
-        else {
+        } else {
             return  '1|' . $id;
         }
     }
