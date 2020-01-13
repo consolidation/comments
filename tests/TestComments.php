@@ -49,6 +49,42 @@ top:
     two:
 EOT;
 
+        $duplicate_comments = <<< 'EOT'
+# Top comments
+top:
+  # Top one
+  one:
+    # Top two
+    two:
+# Bottom comments
+bottom:
+  # Bottom one
+  one:
+    # Bottom two
+    two: two
+EOT;
+
+        $duplicate_altered_without_comments = <<< 'EOT'
+top:
+  one:
+    two: 2
+bottom:
+  one: 1
+EOT;
+
+        $duplicate_altered_with_comments = <<< 'EOT'
+# Top comments
+top:
+  # Top one
+  one:
+    # Top two
+    two: 2
+# Bottom comments
+bottom:
+  # Bottom one
+  one: 1
+EOT;
+
         $travis_yaml_with_comments = <<< 'EOT'
 dist: trusty
 language: php
@@ -126,6 +162,7 @@ EOT;
         return [
             [ $simple_yaml, $simple_yaml_reordered, $simple_yaml_expected, ],
             [ $indented_comments, $indented_without_comments, $indented_comments, ],
+            [ $duplicate_comments, $duplicate_altered_without_comments, $duplicate_altered_with_comments, ],
             [ $travis_yaml_with_comments, $travis_yaml_without_comments, $travis_yaml_with_comments ],
         ];
     }
