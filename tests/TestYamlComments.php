@@ -2,8 +2,9 @@
 namespace Consolidation\Comments;
 
 use Symfony\Component\Yaml\Yaml;
+use PHPUnit\Framework\TestCase;
 
-class TestYamlComments extends \PHPUnit_Framework_TestCase
+class TestYamlComments extends TestCase
 {
     function setUp()
     {
