@@ -17,10 +17,6 @@ namespace Consolidation\Comments;
  *
  * If the resulting yaml file contents are reordered, comments may
  * become mis-ordered (attached to the wrong element).
- *
- * Comments that appear before sections of yaml that are edited may
- * be inadvertantly lost. It is recommended to always place comments
- * immediately before identifier lines (i.e. "foo:").
  */
 class Comments
 {
@@ -160,7 +156,34 @@ class Comments
     }
 
     /**
-     * Generates unique line id based on the key it contains.
+     * Generates unique line id based on the key it contains. It allows
+     * to reattach comments to the edited yaml sections.
+     *
+     * For example, lets take a look at the following yaml:
+     *
+     * # Top comments
+     * top:
+     * # Top one
+     *   one:
+     *     # Top two
+     *     two: two
+     * # Bottom comments
+     * bottom:
+     *   # Bottom one
+     *   one:
+     *     # Bottom two
+     *     two: 2
+     *
+     * This method generates ids based on keys (discarding values).
+     * Additionally, duplicating keys are taken into account as well.
+     * The following ids will be generated:
+     *
+     * 1|top
+     * 1|  one
+     * 1|    two
+     * 1|bottom
+     * 2|  one
+     * 2|    two
      *
      * @param string $line
      * @param bool $isCollecting
