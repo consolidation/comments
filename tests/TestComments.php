@@ -2,6 +2,7 @@
 namespace Consolidation\Comments;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Yaml\Parser;
 
 class TestComments extends TestCase
 {
@@ -176,6 +177,13 @@ EOT;
      */
     function testCommentParsing($original_contents, $altered_contents, $expected)
     {
+        // Ensure that passed args are valid YAML.
+
+        $parser = new Parser();
+        foreach (func_get_args() as $arg) {
+          $parser->parse($arg);
+        }
+
         // Second step: collect comments from original document and inject them into result.
 
         $commentManager = new Comments();
