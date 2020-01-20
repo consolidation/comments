@@ -2,8 +2,9 @@
 namespace Consolidation\Comments;
 
 use Symfony\Component\Yaml\Parser;
+use PHPUnit\Framework\TestCase;
 
-class TestComments extends \PHPUnit_Framework_TestCase
+class TestComments extends TestCase
 {
     function commentTestData()
     {
