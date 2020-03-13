@@ -17,6 +17,10 @@ namespace Consolidation\Comments;
  *
  * If the resulting yaml file contents are reordered, comments may
  * become mis-ordered (attached to the wrong element).
+ *
+ * Comments that appear before sections of yaml that are edited may
+ * be inadvertantly lost. It is recommended to always place comments
+ * immediately before identifier lines (i.e. "foo:").
  */
 class Comments
 {
