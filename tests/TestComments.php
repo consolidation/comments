@@ -1,6 +1,7 @@
 <?php
 namespace Consolidation\Comments;
 
+use Symfony\Component\Yaml\Parser;
 use PHPUnit\Framework\TestCase;
 
 class TestComments extends TestCase
@@ -49,6 +50,42 @@ EOT;
 top:
   one:
     two:
+EOT;
+
+        $duplicate_comments = <<< 'EOT'
+# Top comments
+top:
+  # Top one
+  one:
+    # Top two
+    two:
+# Bottom comments
+bottom:
+  # Bottom one
+  one:
+    # Bottom two
+    two: two
+EOT;
+
+        $duplicate_altered_without_comments = <<< 'EOT'
+top:
+  one:
+    two: 2
+bottom:
+  one: 1
+EOT;
+
+        $duplicate_altered_with_comments = <<< 'EOT'
+# Top comments
+top:
+  # Top one
+  one:
+    # Top two
+    two: 2
+# Bottom comments
+bottom:
+  # Bottom one
+  one: 1
 EOT;
 
         $travis_yaml_with_comments = <<< 'EOT'
@@ -128,6 +165,7 @@ EOT;
         return [
             [ $simple_yaml, $simple_yaml_reordered, $simple_yaml_expected, ],
             [ $indented_comments, $indented_without_comments, $indented_comments, ],
+            [ $duplicate_comments, $duplicate_altered_without_comments, $duplicate_altered_with_comments, ],
             [ $travis_yaml_with_comments, $travis_yaml_without_comments, $travis_yaml_with_comments ],
         ];
     }
@@ -139,6 +177,13 @@ EOT;
      */
     function testCommentParsing($original_contents, $altered_contents, $expected)
     {
+        // Ensure that passed args are valid YAML.
+
+        $parser = new Parser();
+        foreach (func_get_args() as $arg) {
+          $parser->parse($arg);
+        }
+
         // Second step: collect comments from original document and inject them into result.
 
         $commentManager = new Comments();
