@@ -2,10 +2,10 @@
 
 A tool for preserving comments, e.g. when parsing YAML files.
 
-[![Build Status](https://travis-ci.org/consolidation/comments.svg?branch=master)](https://travis-ci.org/consolidation/comments)
+[![Build Status](https://travis-ci.org/consolidation/comments.svg?branch=main)](https://travis-ci.org/consolidation/comments)
 [![Windows Build](https://ci.appveyor.com/api/projects/status/7x2amxttvvuuh7pf?svg=true)](https://ci.appveyor.com/project/greg-1-anderson/comments)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/consolidation/comments/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/consolidation/comments/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/consolidation/comments/badge.svg?branch=master)](https://coveralls.io/github/consolidation/comments?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/consolidation/comments/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/consolidation/comments/?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/consolidation/comments/badge.svg?branch=main)](https://coveralls.io/github/consolidation/comments?branch=main)
 [![License](https://poser.pugx.org/consolidation/comments/license)](https://packagist.org/packages/consolidation/comments)
 
 ## Component Status
