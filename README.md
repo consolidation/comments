@@ -17,7 +17,8 @@ Prototype.
 Do lightweight editing on YAML files and then rewrite the file without losing embedded comments.
 
 ## Usage
-```
+
+```php
 // First step: read the file, parse the yaml, edit and dump the results.
 
 $original_contents = file_get_contents($filepath);
